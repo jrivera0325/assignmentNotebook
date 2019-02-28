@@ -25,6 +25,14 @@ class ViewController: UIViewController, UITableViewDataSource {
         
     }
     
+    @IBAction func addAssignment(_ sender: UIBarButtonItem) {
+        if let newAssignmentName = newAssignmentTextField.text {
+            let newAssignment = Assignment(name: newAssignmentName)
+            assignment.append(newAssignment)
+            tableView.reloadData()
+        }
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return assignment.count
@@ -32,12 +40,14 @@ class ViewController: UIViewController, UITableViewDataSource {
 
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "myCell")!
-        let currentAssigmentName = assignment[indexPath.row].name
-        cell.textLabel?.text = currentAssigmentName
-        return cell
+       if let cell = tableView.dequeueReusableCell(withIdentifier: "myCell") {
+            let currentAssigmentName = assignment[indexPath.row].name
+            cell.textLabel?.text = currentAssigmentName
+            return cell
+        } else {
+        return UITableViewCell()
     }
-
-
 }
-
+    
+    
+}
